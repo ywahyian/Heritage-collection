@@ -66,10 +66,59 @@
   </div>
 </section>
 
+<!-- Waitlist / Email Signup -->
+<section class="cta" id="waitlist">
+  <h2>Join the Waitlist</h2>
+  <p style="max-width:700px;margin:0 auto 24px;color:#555;line-height:1.6">
+    Be first to know when the Heritage Collection drops. Limited pieces per color. Pre-order access goes to waitlist members.
+  </p>
+  <form id="signup-form" action="https://formspree.io/f/your-endpoint" method="POST" style="max-width:560px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:12px;text-align:left">
+    <label style="font-size:0.95rem;color:#333">Name
+      <input type="text" name="name" placeholder="Your name" required style="width:100%;margin-top:6px;padding:14px 16px;border-radius:12px;border:1px solid #ddd;background:#fff;">
+    </label>
+    <label style="font-size:0.95rem;color:#333">Email
+      <input type="email" name="email" placeholder="you@example.com" required style="width:100%;margin-top:6px;padding:14px 16px;border-radius:12px;border:1px solid #ddd;background:#fff;">
+    </label>
+    <label style="display:flex;align-items:flex-start;gap:10px;color:#555;font-size:0.9rem">
+      <input type="checkbox" name="consent" required style="margin-top:4px"> I agree to receive emails about launches and offers. I can unsubscribe anytime.
+    </label>
+    <button type="submit" style="background:#111;color:#fff;padding:14px 20px;border:none;border-radius:50px;font-size:1rem;font-family:'Playfair Display',serif;cursor:pointer;letter-spacing:0.5px">Notify Me</button>
+    <p id="form-status" style="margin:8px 0 0;color:#2f7a3e;display:none">Thank you! Please check your inbox to confirm.</p>
+  </form>
+</section>
+
 <section class="cta">
   <h2>Be the First to Wear History</h2>
   <button>Pre-Order Now</button>
 </section>
+
+<script>
+  // Progressive enhancement for Formspree success message
+  const form = document.getElementById('signup-form');
+  const statusEl = document.getElementById('form-status');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const action = form.getAttribute('action');
+      try {
+        const res = await fetch(action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' }});
+        if (res.ok) {
+          statusEl.style.display = 'block';
+          form.reset();
+        } else {
+          statusEl.style.display = 'block';
+          statusEl.style.color = '#b23232';
+          statusEl.textContent = 'Something went wrong. Please try again.';
+        }
+      } catch (err) {
+        statusEl.style.display = 'block';
+        statusEl.style.color = '#b23232';
+        statusEl.textContent = 'Network error. Please try again.';
+      }
+    });
+  }
+</script>
 
 </body>
 </html>
