@@ -165,6 +165,11 @@
   font-size: 20px;
   color: var(--ink);
 }
+/* Search results styling */
+.results .hit { padding:10px 12px; border-radius:8px; cursor:pointer; }
+.results .hit:hover { background:#f6f2ea; }
+/* brief highlight on the matched card */
+.item.flash { outline:2px solid #C9A23F; outline-offset:2px; transition: outline .2s; }
   </style>
 </head>
 <body>
@@ -449,6 +454,70 @@ const openSearchFromMobile = document.getElementById('openSearchFromMobile');
 const openCartFromMobile = document.getElementById('openCartFromMobile');
 if (openSearchFromMobile) openSearchFromMobile.addEventListener('click', (e) => { e.preventDefault(); closeMobileMenu(); openModal(searchModal); });
 if (openCartFromMobile) openCartFromMobile.addEventListener('click', (e) => { e.preventDefault(); closeMobileMenu(); openModal(cartDrawer); });
+
+// ---- Simple on-page search (filters visible items) ----
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+
+// Build a tiny index from the collection cards
+const productIndex = [...document.querySelectorAll('.collection .item')].map(el => {
+  const title = el.querySelector('h2')?.textContent?.trim() || '';
+  return { title, el };
+});
+
+function clearResults(){ if (searchResults) searchResults.innerHTML = ''; }
+
+function renderResults(q){
+  clearResults();
+  if (!searchResults) return;
+  const query = (q || '').trim().toLowerCase();
+  if (query.length < 2) return; // wait for 2+ chars
+
+  const hits = productIndex.filter(p => p.title.toLowerCase().includes(query));
+  if (!hits.length) {
+    const empty = document.createElement('div');
+    empty.style.color = '#777';
+    empty.style.padding = '10px 12px';
+    empty.textContent = 'No matches';
+    searchResults.appendChild(empty);
+    return;
+  }
+
+  hits.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'hit';
+    div.textContent = p.title;
+    div.addEventListener('click', () => {
+      closeModal(searchModal);
+      p.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      p.el.classList.add('flash');
+      setTimeout(() => p.el.classList.remove('flash'), 1200);
+    });
+    searchResults.appendChild(div);
+  });
+}
+
+// Live filter + Enter to go to first result
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => renderResults(e.target.value));
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const firstHit = searchResults?.querySelector('.hit');
+      if (firstHit) firstHit.click();
+    }
+  });
+}
+
+// When opening search, reset & focus
+if (searchBtn) {
+  searchBtn.addEventListener('click', () => {
+    clearResults();
+    if (searchInput) {
+      searchInput.value = '';
+      setTimeout(() => searchInput.focus(), 50);
+    }
+  });
+}
   </script>
 </body>
 </html>
