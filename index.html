@@ -151,6 +151,39 @@
   .brand { position: static; transform: none; margin: 0 auto; }
   .nav-inner { justify-content: space-between; }
 }
+	/* HEADER: hide-on-scroll */
+.nav { transition: transform .25s ease; }
+.nav.hide { transform: translateY(-100%); }
+
+/* FOOTER */
+.site-footer { background:#f8f6f3; border-top:1px solid var(--border); color:#222; padding: 48px 24px; }
+.footer-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap:32px; }
+.newsletter h4 { margin:0 0 12px; font-size:20px; letter-spacing:.02em; }
+.newsletter form { display:flex; gap:10px; }
+.newsletter input { flex:1; padding:12px 14px; border:1px solid var(--border); border-radius:10px; font:inherit; background:#fff; }
+.newsletter button { padding:12px 18px; border:0; border-radius:10px; background:#111; color:#fff; cursor:pointer; }
+
+.footer-col h4 { margin:0 0 12px; font-size:18px; letter-spacing:.02em; }
+.footer-col a { display:block; text-decoration:none; color:#333; padding:6px 0; }
+.footer-col a:hover { text-decoration:underline; }
+
+.footer-social { margin-top:14px; display:flex; flex-wrap:wrap; gap:12px; font-size:14px; }
+.footer-social a { color:#666; text-decoration:none; }
+.footer-social a:hover { text-decoration:underline; }
+
+.footer-bottom { max-width:1200px; margin:36px auto 0; padding-top:24px; border-top:1px solid var(--border); text-align:center; }
+.footer-brand { letter-spacing:.22em; font-size:18px; margin-bottom:8px; }
+.footer-meta { color:#777; font-size:13px; }
+
+.footer-geo { margin-top:8px; font-size:13px; color:#666; }
+.footer-geo a { color:#666; text-decoration:none; }
+.footer-geo a:hover { text-decoration:underline; }
+
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .newsletter form { flex-direction:column; }
+  .newsletter button { width:100%; }
+}
   </style>
 </head>
 <body>
@@ -435,6 +468,73 @@ const openSearchFromMobile = document.getElementById('openSearchFromMobile');
 const openCartFromMobile = document.getElementById('openCartFromMobile');
 if (openSearchFromMobile) openSearchFromMobile.addEventListener('click', (e) => { e.preventDefault(); closeMobileMenu(); openModal(searchModal); });
 if (openCartFromMobile) openCartFromMobile.addEventListener('click', (e) => { e.preventDefault(); closeMobileMenu(); openModal(cartDrawer); });
+
+// Hide top nav on scroll down, show on scroll up
+const navEl = document.querySelector('.nav');
+let lastY = window.pageYOffset || document.documentElement.scrollTop;
+window.addEventListener('scroll', () => {
+  const y = window.pageYOffset || document.documentElement.scrollTop;
+  if (y > lastY && y > 80) {         // scrolling down
+    navEl?.classList.add('hide');
+  } else {                           // scrolling up
+    navEl?.classList.remove('hide');
+  }
+  lastY = y;
+});
   </script>
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-grid">
+    <!-- Newsletter -->
+    <div class="newsletter">
+      <h4>Inspire me with the latest WAYANI news</h4>
+      <form action="https://formspree.io/f/xdkdrzno" method="POST" aria-label="Newsletter signup">
+        <input type="email" name="email" placeholder="Email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <div class="footer-social" aria-label="Follow us">
+        <a href="#" aria-label="TikTok">TikTok</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="Facebook">Facebook</a>
+        <a href="#" aria-label="Pinterest">Pinterest</a>
+        <a href="#" aria-label="Snapchat">Snapchat</a>
+        <a href="#" aria-label="LinkedIn">LinkedIn</a>
+        <a href="#" aria-label="Podcasts">Podcasts</a>
+      </div>
+    </div>
+
+    <!-- Customer Service -->
+    <div class="footer-col">
+      <h4>Customer Service</h4>
+      <a href="#">Contact</a>
+      <a href="#">Shipping & Returns</a>
+      <a href="#">FAQs</a>
+    </div>
+
+    <!-- The House of WAYANI -->
+    <div class="footer-col">
+      <h4>The House of WAYANI</h4>
+      <a href="#">Sustainability</a>
+      <a href="#">Ethics & Compliance</a>
+      <a href="#">Careers</a>
+    </div>
+
+    <!-- Legal -->
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">Terms & Conditions</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Cookie Settings</a>
+      <a href="#">General Sales Conditions</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <!-- Centered brand at bottom -->
+    <div class="footer-brand">W A Y A N I</div>
+    <div class="footer-meta">© WAYANI 2025 All rights reserved.</div>
+    <div class="footer-geo">Country/Region: <a href="#">Belgium (English)</a></div>
+  </div>
+</footer>
 </body>
 </html>
