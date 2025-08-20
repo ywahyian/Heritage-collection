@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>W A Y A N I — Chapter 1: Heritage Collection</title>
@@ -55,7 +56,13 @@
 .brand { position: absolute; left: 50%; transform: translateX(-50%); }
     .nav-left, .nav-right { display: flex; align-items: center; gap: 18px; }
     .brand { text-align: center; letter-spacing: 0.22em; font-size: 22px; }
-    .brand a { color: var(--ink); text-decoration: none; }
+    .brand a { 
+  color: var(--ink); 
+  text-decoration: none; 
+  font-family: 'Orbitron', 'Eurydome W05 Regular', serif; 
+  font-weight: 400; 
+  letter-spacing: 0.22em; 
+}
 
     /* Dropdown Menu */
     .menu { position: relative; }
@@ -151,6 +158,13 @@
   .brand { position: static; transform: none; margin: 0 auto; }
   .nav-inner { justify-content: space-between; }
 }
+	.brand-mobile {
+  font-family: 'Orbitron', 'Eurydome W05 Regular', serif;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  font-size: 20px;
+  color: var(--ink);
+}
   </style>
 </head>
 <body>
@@ -210,10 +224,10 @@
     </div>
   </nav>
 
-	<!-- Mobile Drawer Menu -->
+<!-- Mobile Drawer Menu -->
 <aside id="mobileDrawer" class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile menu" aria-hidden="true">
   <header>
-    <strong style="letter-spacing:.18em">W A Y A N I</strong>
+    <strong class="brand-mobile">W A Y A N I</strong>
     <button id="closeMobile" class="icon-btn" aria-label="Close menu">✕</button>
   </header>
   <nav>
