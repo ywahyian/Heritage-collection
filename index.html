@@ -40,6 +40,7 @@
       border-bottom: 1px solid var(--border);
       padding: 10px 24px;
     }
+/* NAV LAYOUT — desktop */
 .nav-inner {
   display: flex;
   justify-content: space-between;
@@ -49,6 +50,8 @@
   padding: 0 20px;
 }
 .nav-left, .nav-right { display: flex; align-items: center; gap: 24px; }
+
+/* Brand perfectly centered */
 .brand { position: absolute; left: 50%; transform: translateX(-50%); }
     .nav-left, .nav-right { display: flex; align-items: center; gap: 18px; }
     .brand { text-align: center; letter-spacing: 0.22em; font-size: 22px; }
@@ -102,6 +105,52 @@
     .drawer .body { padding: 16px; overflow: auto; flex: 1; }
     .drawer .footer { padding: 16px; border-top: 1px solid var(--border); }
     .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 18px; border-radius: 10px; text-decoration: none; }
+	  
+	/* HAMBURGER (hidden on desktop) */
+.hamburger {
+  display: none;
+  width: 36px; height: 36px;
+  align-items: center; justify-content: center;
+  border: 1px solid var(--border); border-radius: 8px;
+  background: transparent; cursor: pointer;
+}
+.hamburger span {
+  display: block; width: 18px; height: 2px; background: var(--ink); position: relative;
+}
+.hamburger span::before, .hamburger span::after {
+  content: ""; position: absolute; left: 0; width: 18px; height: 2px; background: var(--ink);
+}
+.hamburger span::before { top: -6px; }
+.hamburger span::after  { top:  6px; }
+
+/* MOBILE MENU DRAWER */
+.mobile-drawer {
+  position: fixed; left: 0; top: 0; height: 100vh; width: 84%;
+  max-width: 360px; background: var(--card);
+  border-right: 1px solid var(--border);
+  box-shadow: 10px 0 30px rgba(0,0,0,0.18);
+  transform: translateX(-100%); transition: transform .28s ease;
+  z-index: 85; display: flex; flex-direction: column;
+}
+.mobile-drawer.open { transform: translateX(0); }
+.mobile-drawer header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+.mobile-drawer nav { padding: 12px 8px; display: grid; gap: 6px; }
+.mobile-drawer a, .mobile-drawer .mobile-group > button {
+  padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--ink);
+  background: transparent; border: 0; text-align: left; font: inherit; cursor: pointer;
+}
+.mobile-drawer a:hover, .mobile-drawer .mobile-group > button:hover { background: #f6f2ea; }
+
+/* Simple nested groups */
+.mobile-group .mobile-sub { margin-left: 8px; padding-left: 8px; border-left: 1px dashed var(--border); display: grid; gap: 4px; }
+
+/* RESPONSIVE BREAKPOINT */
+@media (max-width: 900px) {
+  .nav-left, .nav-right { display: none; }
+  .hamburger { display: flex; }
+  .brand { position: static; transform: none; margin: 0 auto; }
+  .nav-inner { justify-content: space-between; }
+}
   </style>
 </head>
 <body>
@@ -109,6 +158,11 @@
   <!-- Top Navigation -->
   <nav class="nav" role="navigation" aria-label="Primary">
     <div class="nav-inner">
+		<!-- Mobile hamburger (shows under 900px) -->
+<button id="hamburgerBtn" class="hamburger" aria-label="Open menu" aria-controls="mobileDrawer" aria-expanded="false">
+  <span></span>
+</button>
+		
       <div class="nav-left">
         <div class="menu">
           <button aria-haspopup="true" aria-expanded="false">Chapter 1 —  Heritage</button>
@@ -155,6 +209,42 @@
       </div>
     </div>
   </nav>
+
+	<!-- Mobile Drawer Menu -->
+<aside id="mobileDrawer" class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile menu" aria-hidden="true">
+  <header>
+    <strong style="letter-spacing:.18em">W A Y A N I</strong>
+    <button id="closeMobile" class="icon-btn" aria-label="Close menu">✕</button>
+  </header>
+  <nav>
+    <div class="mobile-group">
+      <button aria-expanded="false">Chapter 1 : Heritage — Season I</button>
+      <div class="mobile-sub" hidden>
+        <a href="#">Lookbook</a>
+        <a href="#">Story</a>
+        <a href="#">Editorial Film</a>
+      </div>
+    </div>
+    <div class="mobile-group">
+      <button aria-expanded="false">Scarves</button>
+      <div class="mobile-sub" hidden>
+        <a href="#">Premium Jersey</a>
+        <a href="#">Bamboo Jersey</a>
+      </div>
+    </div>
+    <div class="mobile-group">
+      <button aria-expanded="false">Info</button>
+      <div class="mobile-sub" hidden>
+        <a href="#">Care & Materials</a>
+        <a href="#">Shipping & Returns</a>
+        <a href="#">About WAYANI</a>
+      </div>
+    </div>
+    <a href="#">Contact</a>
+    <a href="#" id="openSearchFromMobile">Search</a>
+    <a href="#" id="openCartFromMobile">Cart</a>
+  </nav>
+</aside>
 
   <!-- Hero Section -->
   <header class="hero">
@@ -307,6 +397,44 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') { closeModal(searchModal); closeModal(cartDrawer); }
     });
+	  // Mobile menu toggle
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileDrawer = document.getElementById('mobileDrawer');
+const closeMobile = document.getElementById('closeMobile');
+
+function openMobileMenu() {
+  mobileDrawer.classList.add('open');
+  mobileDrawer.setAttribute('aria-hidden','false');
+  openOverlay();
+  hamburgerBtn.setAttribute('aria-expanded','true');
+}
+function closeMobileMenu() {
+  mobileDrawer.classList.remove('open');
+  mobileDrawer.setAttribute('aria-hidden','true');
+  closeOverlay();
+  hamburgerBtn.setAttribute('aria-expanded','false');
+}
+
+if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMobileMenu);
+if (closeMobile) closeMobile.addEventListener('click', closeMobileMenu);
+overlay.addEventListener('click', closeMobileMenu);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileMenu(); });
+
+// Expand/collapse nested groups
+document.querySelectorAll('.mobile-group > button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const sub = btn.nextElementSibling;
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!expanded));
+    sub.hidden = expanded;
+  });
+});
+
+// Open existing Search/Cart from mobile items
+const openSearchFromMobile = document.getElementById('openSearchFromMobile');
+const openCartFromMobile = document.getElementById('openCartFromMobile');
+if (openSearchFromMobile) openSearchFromMobile.addEventListener('click', (e) => { e.preventDefault(); closeMobileMenu(); openModal(searchModal); });
+if (openCartFromMobile) openCartFromMobile.addEventListener('click', (e) => { e.preventDefault(); closeMobileMenu(); openModal(cartDrawer); });
   </script>
 </body>
 </html>
