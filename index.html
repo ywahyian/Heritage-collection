@@ -93,6 +93,11 @@
     .drawer .body { padding: 16px; overflow: auto; flex: 1; }
     .drawer .footer { padding: 16px; border-top: 1px solid var(--border); }
     .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 18px; border-radius: 10px; text-decoration: none; }
+
+    /* Search results */
+.results .hit { padding:10px 12px; border-radius:8px; cursor:pointer; }
+.results .hit:hover { background:#f6f2ea; }
+.item.flash { outline:2px solid #C9A23F; outline-offset:2px; transition: outline .2s; }
   </style>
 </head>
 <body>
@@ -297,6 +302,71 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') { closeModal(searchModal); closeModal(cartDrawer); }
     });
+
+    // --- Simple on-page search index ---
+const searchInput = document.getElementById('searchInput');
+const searchResults = document.getElementById('searchResults');
+
+// Build index from the visible collection items
+const productIndex = [...document.querySelectorAll('.collection .item')].map(el => {
+  const title = el.querySelector('h2')?.textContent?.trim() || '';
+  return { title, el };
+});
+
+function clearResults() { searchResults.innerHTML = ''; }
+
+function renderResults(q) {
+  clearResults();
+  const query = q.trim().toLowerCase();
+  if (query.length < 2) return; // wait for 2+ chars
+
+  const hits = productIndex.filter(p => p.title.toLowerCase().includes(query));
+  if (!hits.length) {
+    const empty = document.createElement('div');
+    empty.style.color = '#777';
+    empty.style.padding = '10px 12px';
+    empty.textContent = 'No matches';
+    searchResults.appendChild(empty);
+    return;
+  }
+
+  hits.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'hit';
+    div.textContent = p.title;
+    div.addEventListener('click', () => {
+      closeModal(searchModal);
+      p.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      p.el.classList.add('flash');
+      setTimeout(() => p.el.classList.remove('flash'), 1200);
+    });
+    searchResults.appendChild(div);
+  });
+}
+
+// Live filter as the user types
+if (searchInput) {
+  searchInput.addEventListener('input', (e) => renderResults(e.target.value));
+
+  // Enter key goes to first result
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const firstHit = searchResults.querySelector('.hit');
+      if (firstHit) firstHit.click();
+    }
+  });
+}
+
+// When opening search, reset state and focus the field
+if (searchBtn) {
+  searchBtn.addEventListener('click', () => {
+    clearResults();
+    if (searchInput) {
+      searchInput.value = '';
+      setTimeout(() => searchInput.focus(), 50);
+    }
+  });
+}
   </script>
 </body>
 </html>
