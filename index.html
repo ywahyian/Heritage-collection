@@ -43,24 +43,47 @@
     }
     .nav.hide { transform: translateY(-100%); }
 
-    /* NAV LAYOUT — desktop */
-	.nav-inner,
-	.footer-grid,
-	.footer-bottom {
- 		max-width: 1600px; /* nav + footer wider */
-  		margin: 0 auto;
-  		padding: 0 40px;
+/* NAV LAYOUT — desktop (wider, stable center brand) */
+.nav-inner{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;  /* left | BRAND | right */
+  align-items: center;
+  max-width: 1600px;                    /* wider container */
+  margin: 0 auto;
+  padding: 0 40px;                      /* more side breathing */
+}
+.nav-left, .nav-right { display:flex; gap:32px; }
+.nav-left  { justify-content:flex-start; white-space:nowrap; }
+.nav-right { justify-content:flex-end;   white-space:nowrap; }
+
+/* Brand centered (remove absolute centering) */
+.brand { 
+  position: static; 
+  transform: none; 
+  text-align: center; 
+  letter-spacing: .22em; 
+  font-size: 22px; 
 }
 
-	.collection {
-  		max-width: 1800px; /* product grid wider */
-  		margin: 0 auto;
-  		padding: 40px 60px 10px;
+/* Slightly slimmer menu items to avoid wrapping */
+.menu > button { padding: 8px 4px; font-size: 15px; }
+	  /* Wider product grid */
+.collection{
+  max-width: 1800px;        /* was 1200px */
+  margin: 0 auto;
+  padding: 40px 80px 10px;  /* a bit more side padding */
+  gap: 48px;                /* looser cards */
 }
-    .nav-left, .nav-right { display: flex; align-items: center; gap: 24px; }
+
+/* Wider footer containers */
+.footer-grid,
+.footer-bottom{
+  max-width: 1600px;  /* wider footer like Dior */
+  margin: 0 auto;
+  padding: 0 40px;
+}
 
     /* Brand perfectly centered */
-    .brand { position: absolute; left: 50%; transform: translateX(-50%); }
     .brand { text-align: center; letter-spacing: 0.22em; font-size: 22px; }
     .brand a { color: var(--ink); text-decoration: none; }
 
