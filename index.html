@@ -241,6 +241,27 @@
     .results .title { font-size:14px; font-weight:400; letter-spacing:.03em; }
     .results .desc { font-size:12px; color:#666; }
     .item.flash { outline:2px solid #C9A23F; outline-offset:2px; transition: outline .2s; }
+	  
+	  /* === FOOTER WIDTH OVERRIDE (place LAST in <style>) === */
+.site-footer { padding: 72px 0; } /* taller & no side padding on the wrapper */
+
+.footer-grid,
+.footer-bottom {
+  max-width: none !important;   /* kill any earlier 1200/1600 caps */
+  width: 100%;
+  margin: 0;                    /* no centering box */
+  padding: 0 80px;              /* controlled gutter to the viewport edge */
+}
+
+@media (max-width: 900px) {
+  .footer-grid,
+  .footer-bottom { padding: 0 20px; }
+}
+
+/* optional: breathe the columns a bit on wide screens */
+@media (min-width: 1280px) {
+  .footer-grid { column-gap: 48px; }
+}
   </style>
 </head>
 <body>
@@ -643,8 +664,8 @@
     <div class="footer-grid">
       <!-- Newsletter -->
       <div class="newsletter">
-        <h4>W A Y A N I Whispers:</h4>
-		<h4>Timeless drops, First to you.</h4>
+        <h4>W A Y A N I - Whispers</h4>
+		<h4>Timeless Drops, First To You.</h4>
         <form action="https://formspree.io/f/xdkdrzno" method="POST" aria-label="Newsletter signup">
           <input type="email" name="email" placeholder="Email" required>
           <button type="submit">Subscribe</button>
