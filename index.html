@@ -44,15 +44,19 @@
     .nav.hide { transform: translateY(-100%); }
 
     /* NAV LAYOUT — desktop */
-    .nav-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 20px;
-      position: relative;
-    }
+	.nav-inner,
+	.footer-grid,
+	.footer-bottom {
+ 		max-width: 1600px; /* nav + footer wider */
+  		margin: 0 auto;
+  		padding: 0 40px;
+}
+
+	.collection {
+  		max-width: 1800px; /* product grid wider */
+  		margin: 0 auto;
+  		padding: 40px 60px 10px;
+}
     .nav-left, .nav-right { display: flex; align-items: center; gap: 24px; }
 
     /* Brand perfectly centered */
