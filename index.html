@@ -39,21 +39,24 @@
       background: var(--bg);
       border-bottom: 1px solid var(--border);
       padding: 10px 24px;
+      transition: transform .25s ease; /* hide-on-scroll */
     }
-/* NAV LAYOUT — desktop */
-.nav-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-.nav-left, .nav-right { display: flex; align-items: center; gap: 24px; }
+    .nav.hide { transform: translateY(-100%); }
 
-/* Brand perfectly centered */
-.brand { position: absolute; left: 50%; transform: translateX(-50%); }
-    .nav-left, .nav-right { display: flex; align-items: center; gap: 18px; }
+    /* NAV LAYOUT — desktop */
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+    }
+    .nav-left, .nav-right { display: flex; align-items: center; gap: 24px; }
+
+    /* Brand perfectly centered */
+    .brand { position: absolute; left: 50%; transform: translateX(-50%); }
     .brand { text-align: center; letter-spacing: 0.22em; font-size: 22px; }
     .brand a { color: var(--ink); text-decoration: none; }
 
@@ -97,6 +100,7 @@
     .modal header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .modal input[type="search"] { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border); font: inherit; }
     .modal .results { margin-top: 12px; max-height: 50vh; overflow: auto; }
+
     .icon-btn { background: transparent; border: 0; cursor: pointer; font: inherit; padding: 8px; }
 
     .drawer { position: fixed; right: 0; top: 0; height: 100vh; width: min(420px, 92%); background: var(--card); border-left: 1px solid var(--border); box-shadow: -10px 0 30px rgba(0,0,0,0.18); transform: translateX(100%); transition: transform .3s ease; z-index: 80; display: flex; flex-direction: column; }
@@ -105,145 +109,111 @@
     .drawer .body { padding: 16px; overflow: auto; flex: 1; }
     .drawer .footer { padding: 16px; border-top: 1px solid var(--border); }
     .btn { display: inline-block; background: var(--accent); color: #fff; padding: 12px 18px; border-radius: 10px; text-decoration: none; }
-	  
-	/* HAMBURGER (hidden on desktop) */
-.hamburger {
-  display: none;
-  width: 36px; height: 36px;
-  align-items: center; justify-content: center;
-  border: 1px solid var(--border); border-radius: 8px;
-  background: transparent; cursor: pointer;
-}
-.hamburger span {
-  display: block; width: 18px; height: 2px; background: var(--ink); position: relative;
-}
-.hamburger span::before, .hamburger span::after {
-  content: ""; position: absolute; left: 0; width: 18px; height: 2px; background: var(--ink);
-}
-.hamburger span::before { top: -6px; }
-.hamburger span::after  { top:  6px; }
 
-/* MOBILE MENU DRAWER */
-.mobile-drawer {
-  position: fixed; left: 0; top: 0; height: 100vh; width: 84%;
-  max-width: 360px; background: var(--card);
-  border-right: 1px solid var(--border);
-  box-shadow: 10px 0 30px rgba(0,0,0,0.18);
-  transform: translateX(-100%); transition: transform .28s ease;
-  z-index: 85; display: flex; flex-direction: column;
-}
-.mobile-drawer.open { transform: translateX(0); }
-.mobile-drawer header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-.mobile-drawer nav { padding: 12px 8px; display: grid; gap: 6px; }
-.mobile-drawer a, .mobile-drawer .mobile-group > button {
-  padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--ink);
-  background: transparent; border: 0; text-align: left; font: inherit; cursor: pointer;
-}
-.mobile-drawer a:hover, .mobile-drawer .mobile-group > button:hover { background: #f6f2ea; }
+    /* HAMBURGER (hidden on desktop) */
+    .hamburger {
+      display: none;
+      width: 36px; height: 36px;
+      align-items: center; justify-content: center;
+      border: 1px solid var(--border); border-radius: 8px;
+      background: transparent; cursor: pointer;
+    }
+    .hamburger span {
+      display: block; width: 18px; height: 2px; background: var(--ink); position: relative;
+    }
+    .hamburger span::before, .hamburger span::after {
+      content: ""; position: absolute; left: 0; width: 18px; height: 2px; background: var(--ink);
+    }
+    .hamburger span::before { top: -6px; }
+    .hamburger span::after  { top:  6px; }
 
-/* Simple nested groups */
-.mobile-group .mobile-sub { margin-left: 8px; padding-left: 8px; border-left: 1px dashed var(--border); display: grid; gap: 4px; }
+    /* MOBILE MENU DRAWER */
+    .mobile-drawer {
+      position: fixed; left: 0; top: 0; height: 100vh; width: 84%;
+      max-width: 360px; background: var(--card);
+      border-right: 1px solid var(--border);
+      box-shadow: 10px 0 30px rgba(0,0,0,0.18);
+      transform: translateX(-100%); transition: transform .28s ease;
+      z-index: 85; display: flex; flex-direction: column;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+    .mobile-drawer header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .mobile-drawer nav { padding: 12px 8px; display: grid; gap: 6px; }
+    .mobile-drawer a, .mobile-drawer .mobile-group > button {
+      padding: 12px 14px; border-radius: 10px; text-decoration: none; color: var(--ink);
+      background: transparent; border: 0; text-align: left; font: inherit; cursor: pointer;
+    }
+    .mobile-drawer a:hover, .mobile-drawer .mobile-group > button:hover { background: #f6f2ea; }
 
-/* RESPONSIVE BREAKPOINT */
-@media (max-width: 900px) {
-  .nav-left, .nav-right { display: none; }
-  .hamburger { display: flex; }
-  .brand { position: static; transform: none; margin: 0 auto; }
-  .nav-inner { justify-content: space-between; }
-}
-	/* HEADER: hide-on-scroll */
-.nav { transition: transform .25s ease; }
-.nav.hide { transform: translateY(-100%); }
+    /* Simple nested groups */
+    .mobile-group .mobile-sub { margin-left: 8px; padding-left: 8px; border-left: 1px dashed var(--border); display: grid; gap: 4px; }
 
-/* FOOTER */
-.site-footer { background:#f8f6f3; border-top:1px solid var(--border); color:#222; padding: 48px 24px; }
-.footer-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap:32px; }
-.newsletter h4 { margin:0 0 12px; font-size:20px; letter-spacing:.02em; }
-.newsletter form { display:flex; gap:10px; }
-.newsletter input { flex:1; padding:12px 14px; border:1px solid var(--border); border-radius:10px; font:inherit; background:#fff; }
-.newsletter button { padding:12px 18px; border:0; border-radius:10px; background:#111; color:#fff; cursor:pointer; }
+    /* RESPONSIVE BREAKPOINT */
+    @media (max-width: 900px) {
+      .nav-left, .nav-right { display: none; }
+      .hamburger { display: flex; }
+      .brand { position: static; transform: none; margin: 0 auto; }
+      .nav-inner { justify-content: space-between; }
+    }
 
-.footer-col h4 { margin:0 0 12px; font-size:18px; letter-spacing:.02em; }
-.footer-col a { display:block; text-decoration:none; color:#333; padding:6px 0; }
-.footer-col a:hover { text-decoration:underline; }
+    /* === WAYANI Luxury Typography (overrides) === */
+    body {
+      font-weight: 300;           /* lighter */
+      color: #111;                /* softer than pure black */
+      line-height: 1.6;
+      letter-spacing: 0.02em;
+    }
+    h1, h2, h3, h4, h5 {
+      font-weight: 400;           /* no bold */
+      letter-spacing: 0.05em;
+      color: #111;
+      margin-top: 1.2em;
+      margin-bottom: 0.6em;
+    }
+    a { color: #111; text-decoration: none; font-weight: 300; }
+    a:hover { opacity: 0.7; }
 
-.footer-social { margin-top:14px; display:flex; flex-wrap:wrap; gap:12px; font-size:14px; }
-.footer-social a { color:#666; text-decoration:none; }
-.footer-social a:hover { text-decoration:underline; }
+    /* Footer (Dior-like) */
+    .site-footer { background:#f8f6f3; border-top:1px solid var(--border); color:#222; padding: 48px 24px; }
+    .footer-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap:32px; }
+    .newsletter h4 { margin:0 0 12px; font-size:20px; letter-spacing:.05em; font-weight:400; }
+    .newsletter form { display:flex; gap:10px; }
+    .newsletter input { flex:1; padding:12px 14px; border:1px solid var(--border); border-radius:10px; font:inherit; background:#fff; font-weight:300; }
+    .newsletter button { padding:12px 18px; border:0; border-radius:10px; background:#111; color:#fff; cursor:pointer; font-weight:400; }
 
-.footer-bottom { max-width:1200px; margin:36px auto 0; padding-top:24px; border-top:1px solid var(--border); text-align:center; }
-.footer-brand { letter-spacing:.22em; font-size:18px; margin-bottom:8px; }
-.footer-meta { color:#777; font-size:13px; }
+    .footer-col h4 { margin:0 0 12px; font-size:18px; letter-spacing:.05em; font-weight:400; }
+    .footer-col a { display:block; text-decoration:none; color:#333; padding:6px 0; font-weight:300; }
+    .footer-col a:hover { text-decoration:underline; }
 
-.footer-geo { margin-top:8px; font-size:13px; color:#666; }
-.footer-geo a { color:#666; text-decoration:none; }
-.footer-geo a:hover { text-decoration:underline; }
+    .footer-social { margin-top:14px; display:flex; flex-wrap:wrap; gap:12px; font-size:14px; }
+    .footer-social a { color:#666; text-decoration:none; }
+    .footer-social a:hover { text-decoration:underline; }
 
-@media (max-width: 900px) {
-  .footer-grid { grid-template-columns: 1fr; }
-  .newsletter form { flex-direction:column; }
-  .newsletter button { width:100%; }
-}
-/* === WAYANI Luxury Typography (overrides) === */
-body {
-  font-weight: 300;           /* lighter */
-  color: #111;                /* softer than pure black */
-  line-height: 1.6;
-  letter-spacing: 0.02em;
-}
+    .footer-bottom { max-width:1200px; margin:36px auto 0; padding-top:24px; border-top:1px solid var(--border); text-align:center; }
+    .footer-brand { letter-spacing:.22em; font-size:18px; margin-bottom:8px; font-weight:400; }
+    .footer-meta { color:#777; font-size:13px; font-weight:300; }
+    .footer-geo { margin-top:8px; font-size:13px; color:#666; }
+    .footer-geo a { color:#666; text-decoration:none; }
+    .footer-geo a:hover { text-decoration:underline; }
 
-h1, h2, h3, h4, h5 {
-  font-weight: 400;           /* no bold */
-  letter-spacing: 0.05em;
-  color: #111;
-  margin-top: 1.2em;
-  margin-bottom: 0.6em;
-}
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .newsletter form { flex-direction:column; }
+      .newsletter button { width:100%; }
+    }
 
-a { color: #111; text-decoration: none; font-weight: 300; }
-a:hover { opacity: 0.7; }
-
-/* Footer polish (matches typography) */
-.site-footer { background:#f8f6f3; border-top:1px solid var(--border); color:#222; padding: 48px 24px; }
-.footer-grid { max-width:1200px; margin:0 auto; display:grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap:32px; }
-.newsletter h4 { margin:0 0 12px; font-size:20px; letter-spacing:.05em; font-weight:400; }
-.newsletter form { display:flex; gap:10px; }
-.newsletter input { flex:1; padding:12px 14px; border:1px solid var(--border); border-radius:10px; font:inherit; background:#fff; font-weight:300; }
-.newsletter button { padding:12px 18px; border:0; border-radius:10px; background:#111; color:#fff; cursor:pointer; font-weight:400; }
-
-.footer-col h4 { margin:0 0 12px; font-size:18px; letter-spacing:.05em; font-weight:400; }
-.footer-col a { display:block; text-decoration:none; color:#333; padding:6px 0; font-weight:300; }
-.footer-col a:hover { text-decoration:underline; }
-
-.footer-social { margin-top:14px; display:flex; flex-wrap:wrap; gap:12px; font-size:14px; }
-.footer-social a { color:#666; text-decoration:none; }
-.footer-social a:hover { text-decoration:underline; }
-
-.footer-bottom { max-width:1200px; margin:36px auto 0; padding-top:24px; border-top:1px solid var(--border); text-align:center; }
-.footer-brand { letter-spacing:.22em; font-size:18px; margin-bottom:8px; font-weight:400; }
-.footer-meta { color:#777; font-size:13px; font-weight:300; }
-.footer-geo { margin-top:8px; font-size:13px; color:#666; }
-.footer-geo a { color:#666; text-decoration:none; }
-.footer-geo a:hover { text-decoration:underline; }
-
-@media (max-width: 900px) {
-  .footer-grid { grid-template-columns: 1fr; }
-  .newsletter form { flex-direction:column; }
-  .newsletter button { width:100%; }
-}
-
-/* Search results previews */
-.results .hit {
-  display:flex; align-items:center; gap:12px;
-  padding:10px 12px; border-radius:8px; cursor:pointer;
-}
-.results .hit:hover { background:#f6f2ea; }
-.results .thumb { width:48px; height:48px; border-radius:6px; overflow:hidden; flex:0 0 48px; background:#eee; }
-.results .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
-.results .meta { display:grid; gap:2px; }
-.results .title { font-size:14px; font-weight:400; letter-spacing:.03em; }
-.results .desc { font-size:12px; color:#666; }
-.item.flash { outline:2px solid #C9A23F; outline-offset:2px; transition: outline .2s; }
+    /* Search results previews */
+    .results .hit {
+      display:flex; align-items:center; gap:12px;
+      padding:10px 12px; border-radius:8px; cursor:pointer;
+    }
+    .results .hit:hover { background:#f6f2ea; }
+    .results .thumb { width:48px; height:48px; border-radius:6px; overflow:hidden; flex:0 0 48px; background:#eee; }
+    .results .thumb img { width:100%; height:100%; object-fit:cover; display:block; }
+    .results .meta { display:grid; gap:2px; }
+    .results .title { font-size:14px; font-weight:400; letter-spacing:.03em; }
+    .results .desc { font-size:12px; color:#666; }
+    .item.flash { outline:2px solid #C9A23F; outline-offset:2px; transition: outline .2s; }
   </style>
 </head>
 <body>
@@ -251,11 +221,11 @@ a:hover { opacity: 0.7; }
   <!-- Top Navigation -->
   <nav class="nav" role="navigation" aria-label="Primary">
     <div class="nav-inner">
-		<!-- Mobile hamburger (shows under 900px) -->
-<button id="hamburgerBtn" class="hamburger" aria-label="Open menu" aria-controls="mobileDrawer" aria-expanded="false">
-  <span></span>
-</button>
-		
+      <!-- Mobile hamburger (shows under 900px) -->
+      <button id="hamburgerBtn" class="hamburger" aria-label="Open menu" aria-controls="mobileDrawer" aria-expanded="false">
+        <span></span>
+      </button>
+
       <div class="nav-left">
         <div class="menu">
           <button aria-haspopup="true" aria-expanded="false">Chapter 1 —  Heritage</button>
@@ -263,7 +233,7 @@ a:hover { opacity: 0.7; }
             <a href="#" role="menuitem">Season I</a>
             <a href="#" role="menuitem">Lookbook</a>
             <a href="#" role="menuitem">Story</a>
-	<a href="#" role="menuitem">Editorial Movie</a>
+            <a href="#" role="menuitem">Editorial Movie</a>
           </div>
         </div>
         <div class="menu">
@@ -279,7 +249,7 @@ a:hover { opacity: 0.7; }
             <a href="#" role="menuitem">Care & Materials</a>
             <a href="#" role="menuitem">Shipping & Returns</a>
             <a href="#" role="menuitem">About</a>
-         </div>
+          </div>
         </div>
       </div>
 
@@ -303,41 +273,41 @@ a:hover { opacity: 0.7; }
     </div>
   </nav>
 
-	<!-- Mobile Drawer Menu -->
-<aside id="mobileDrawer" class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile menu" aria-hidden="true">
-  <header>
-    <strong style="letter-spacing:.18em">W A Y A N I</strong>
-    <button id="closeMobile" class="icon-btn" aria-label="Close menu">✕</button>
-  </header>
-  <nav>
-    <div class="mobile-group">
-      <button aria-expanded="false">Chapter 1 : Heritage — Season I</button>
-      <div class="mobile-sub" hidden>
-        <a href="#">Lookbook</a>
-        <a href="#">Story</a>
-        <a href="#">Editorial Film</a>
+  <!-- Mobile Drawer Menu -->
+  <aside id="mobileDrawer" class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile menu" aria-hidden="true">
+    <header>
+      <strong style="letter-spacing:.18em">W A Y A N I</strong>
+      <button id="closeMobile" class="icon-btn" aria-label="Close menu">✕</button>
+    </header>
+    <nav>
+      <div class="mobile-group">
+        <button aria-expanded="false">Chapter 1 : Heritage — Season I</button>
+        <div class="mobile-sub" hidden>
+          <a href="#">Lookbook</a>
+          <a href="#">Story</a>
+          <a href="#">Editorial Film</a>
+        </div>
       </div>
-    </div>
-    <div class="mobile-group">
-      <button aria-expanded="false">Scarves</button>
-      <div class="mobile-sub" hidden>
-        <a href="#">Premium Jersey</a>
-        <a href="#">Bamboo Jersey</a>
+      <div class="mobile-group">
+        <button aria-expanded="false">Scarves</button>
+        <div class="mobile-sub" hidden>
+          <a href="#">Premium Jersey</a>
+          <a href="#">Bamboo Jersey</a>
+        </div>
       </div>
-    </div>
-    <div class="mobile-group">
-      <button aria-expanded="false">Info</button>
-      <div class="mobile-sub" hidden>
-        <a href="#">Care & Materials</a>
-        <a href="#">Shipping & Returns</a>
-        <a href="#">About</a>
+      <div class="mobile-group">
+        <button aria-expanded="false">Info</button>
+        <div class="mobile-sub" hidden>
+          <a href="#">Care & Materials</a>
+          <a href="#">Shipping & Returns</a>
+          <a href="#">About</a>
+        </div>
       </div>
-    </div>
-    <a href="#">Contact</a>
-    <a href="#" id="openSearchFromMobile">Search</a>
-    <a href="#" id="openCartFromMobile">Cart</a>
-  </nav>
-</aside>
+      <a href="#">Contact</a>
+      <a href="#" id="openSearchFromMobile">Search</a>
+      <a href="#" id="openCartFromMobile">Cart</a>
+    </nav>
+  </aside>
 
   <!-- Hero Section -->
   <header class="hero">
@@ -459,6 +429,7 @@ a:hover { opacity: 0.7; }
     </div>
   </aside>
 
+  <!-- Scripts -->
   <script>
     // Elements
     const overlay = document.getElementById('overlay');
@@ -490,111 +461,211 @@ a:hover { opacity: 0.7; }
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') { closeModal(searchModal); closeModal(cartDrawer); }
     });
-	  // Mobile menu toggle
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const mobileDrawer = document.getElementById('mobileDrawer');
-const closeMobile = document.getElementById('closeMobile');
 
-function openMobileMenu() {
-  mobileDrawer.classList.add('open');
-  mobileDrawer.setAttribute('aria-hidden','false');
-  openOverlay();
-  hamburgerBtn.setAttribute('aria-expanded','true');
-}
-function closeMobileMenu() {
-  mobileDrawer.classList.remove('open');
-  mobileDrawer.setAttribute('aria-hidden','true');
-  closeOverlay();
-  hamburgerBtn.setAttribute('aria-expanded','false');
-}
+    // Mobile menu toggle
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileDrawer = document.getElementById('mobileDrawer');
+    const closeMobile = document.getElementById('closeMobile');
 
-if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMobileMenu);
-if (closeMobile) closeMobile.addEventListener('click', closeMobileMenu);
-overlay.addEventListener('click', closeMobileMenu);
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileMenu(); });
+    function openMobileMenu() {
+      mobileDrawer.classList.add('open');
+      mobileDrawer.setAttribute('aria-hidden','false');
+      openOverlay();
+      hamburgerBtn.setAttribute('aria-expanded','true');
+    }
+    function closeMobileMenu() {
+      mobileDrawer.classList.remove('open');
+      mobileDrawer.setAttribute('aria-hidden','true');
+      closeOverlay();
+      hamburgerBtn.setAttribute('aria-expanded','false');
+    }
 
-// Expand/collapse nested groups
-document.querySelectorAll('.mobile-group > button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const sub = btn.nextElementSibling;
-    const expanded = btn.getAttribute('aria-expanded') === 'true';
-    btn.setAttribute('aria-expanded', String(!expanded));
-    sub.hidden = expanded;
-  });
-});
+    if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMobileMenu);
+    if (closeMobile) closeMobile.addEventListener('click', closeMobileMenu);
+    overlay.addEventListener('click', closeMobileMenu);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileMenu(); });
 
-// Open existing Search/Cart from mobile items
-const openSearchFromMobile = document.getElementById('openSearchFromMobile');
-const openCartFromMobile = document.getElementById('openCartFromMobile');
-if (openSearchFromMobile) openSearchFromMobile.addEventListener('click', (e) => { e.preventDefault(); closeMobileMenu(); openModal(searchModal); });
-if (openCartFromMobile) openCartFromMobile.addEventListener('click', (e) => { e.preventDefault(); closeMobileMenu(); openModal(cartDrawer); });
+    // Expand/collapse nested groups
+    document.querySelectorAll('.mobile-group > button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sub = btn.nextElementSibling;
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!expanded));
+        sub.hidden = expanded;
+      });
+    });
 
-// Hide top nav on scroll down, show on scroll up
-const navEl = document.querySelector('.nav');
-let lastY = window.pageYOffset || document.documentElement.scrollTop;
-window.addEventListener('scroll', () => {
-  const y = window.pageYOffset || document.documentElement.scrollTop;
-  if (y > lastY && y > 80) {         // scrolling down
-    navEl?.classList.add('hide');
-  } else {                           // scrolling up
-    navEl?.classList.remove('hide');
-  }
-  lastY = y;
-});
+    // Open existing Search/Cart from mobile items
+    const openSearchFromMobile = document.getElementById('openSearchFromMobile');
+    const openCartFromMobile = document.getElementById('openCartFromMobile');
+    if (openSearchFromMobile) openSearchFromMobile.addEventListener('click', (e) => { e.preventDefault(); closeMobileMenu(); openModal(searchModal); });
+    if (openCartFromMobile) openCartFromMobile.addEventListener('click', (e) => { e.preventDefault(); closeMobileMenu(); openModal(cartDrawer); });
+
+    // Hide top nav on scroll down, show on scroll up
+    const navEl = document.querySelector('.nav');
+    let lastY = window.pageYOffset || document.documentElement.scrollTop;
+    window.addEventListener('scroll', () => {
+      const y = window.pageYOffset || document.documentElement.scrollTop;
+      if (y > lastY && y > 80) {         // scrolling down
+        navEl?.classList.add('hide');
+      } else {                           // scrolling up
+        navEl?.classList.remove('hide');
+      }
+      lastY = y;
+    });
+
+    /* ===== SEARCH — live previews from first letter (title + snippet + thumbnail) ===== */
+    (function () {
+      const searchInput = document.getElementById('searchInput');
+      const searchResults = document.getElementById('searchResults');
+
+      // Build index from the collection cards
+      const productIndex = [...document.querySelectorAll('.collection .item')].map(el => {
+        const title = el.querySelector('h2')?.textContent?.trim() || '';
+        const desc  = el.querySelector('p')?.textContent?.trim() || '';
+        const img   = el.querySelector('img')?.getAttribute('src') || '';
+        return { title, desc, img, el };
+      });
+
+      function clearResults(){ if (searchResults) searchResults.innerHTML = ''; }
+
+      function renderResults(q){
+        clearResults();
+        if (!searchResults) return;
+        const query = (q || '').trim().toLowerCase();
+        if (query.length < 1) return; // match from first letter
+
+        const hits = productIndex.filter(p =>
+          p.title.toLowerCase().includes(query) ||
+          p.desc.toLowerCase().includes(query)
+        );
+
+        if (!hits.length) {
+          const empty = document.createElement('div');
+          empty.style.color = '#777';
+          empty.style.padding = '10px 12px';
+          empty.textContent = 'No matches';
+          searchResults.appendChild(empty);
+          return;
+        }
+
+        hits.forEach(p => {
+          const row = document.createElement('div');
+          row.className = 'hit';
+
+          const thumb = document.createElement('div');
+          thumb.className = 'thumb';
+          if (p.img) {
+            const im = document.createElement('img');
+            im.src = p.img;
+            im.alt = p.title;
+            thumb.appendChild(im);
+          }
+
+          const meta = document.createElement('div');
+          meta.className = 'meta';
+          const titleEl = document.createElement('div');
+          titleEl.className = 'title';
+          titleEl.textContent = p.title;
+          const descEl = document.createElement('div');
+          descEl.className = 'desc';
+          descEl.textContent = p.desc.length > 110 ? p.desc.slice(0,107) + '…' : p.desc;
+
+          meta.appendChild(titleEl);
+          meta.appendChild(descEl);
+          row.appendChild(thumb);
+          row.appendChild(meta);
+
+          row.addEventListener('click', () => {
+            closeModal(searchModal);
+            p.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            p.el.classList.add('flash');
+            setTimeout(() => p.el.classList.remove('flash'), 1200);
+          });
+
+          searchResults.appendChild(row);
+        });
+      }
+
+      // Live filter + Enter to go to first result
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => renderResults(e.target.value));
+        searchInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const firstHit = searchResults?.querySelector('.hit');
+            if (firstHit) firstHit.click();
+          }
+        });
+      }
+
+      // When opening search, reset & focus
+      if (searchBtn) {
+        searchBtn.addEventListener('click', () => {
+          clearResults();
+          if (searchInput) {
+            searchInput.value = '';
+            setTimeout(() => searchInput.focus(), 50);
+          }
+        });
+      }
+    })();
   </script>
-<footer class="site-footer" role="contentinfo">
-  <div class="footer-grid">
-    <!-- Newsletter -->
-    <div class="newsletter">
-      <h4>WAYANI whispers: timeless drops, first to you.</h4>
-      <form action="https://formspree.io/f/xdkdrzno" method="POST" aria-label="Newsletter signup">
-        <input type="email" name="email" placeholder="Email" required>
-        <button type="submit">Subscribe</button>
-      </form>
-      <div class="footer-social" aria-label="Follow us">
-        <a href="#" aria-label="TikTok">TikTok</a>
-        <a href="#" aria-label="Instagram">Instagram</a>
-        <a href="#" aria-label="Facebook">Facebook</a>
-        <a href="#" aria-label="Pinterest">Pinterest</a>
-        <a href="#" aria-label="Snapchat">Snapchat</a>
-        <a href="#" aria-label="LinkedIn">LinkedIn</a>
-        <a href="#" aria-label="Podcasts">Podcasts</a>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+      <!-- Newsletter -->
+      <div class="newsletter">
+        <h4>W A Y A N I Whispers:</h4>
+		<h4>Timeless drops, First to you.</h4>
+        <form action="https://formspree.io/f/xdkdrzno" method="POST" aria-label="Newsletter signup">
+          <input type="email" name="email" placeholder="Email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <div class="footer-social" aria-label="Follow us">
+          <a href="#" aria-label="TikTok">TikTok</a>
+          <a href="#" aria-label="Instagram">Instagram</a>
+          <a href="#" aria-label="Facebook">Facebook</a>
+          <a href="#" aria-label="Pinterest">Pinterest</a>
+          <a href="#" aria-label="Snapchat">Snapchat</a>
+          <a href="#" aria-label="LinkedIn">LinkedIn</a>
+          <a href="#" aria-label="Podcasts">Podcasts</a>
+        </div>
+      </div>
+
+      <!-- Customer Service -->
+      <div class="footer-col">
+        <h4>Customer Service</h4>
+        <a href="#">Contact</a>
+        <a href="#">Shipping & Returns</a>
+        <a href="#">FAQs</a>
+      </div>
+
+      <!-- The House of WAYANI -->
+      <div class="footer-col">
+        <h4>The House of</h4>
+        <a href="#">Sustainability</a>
+        <a href="#">Ethics & Compliance</a>
+        <a href="#">Careers</a>
+      </div>
+
+      <!-- Legal -->
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Cookie Settings</a>
+        <a href="#">General Sales Conditions</a>
+        <a href="#">Sitemap</a>
       </div>
     </div>
 
-    <!-- Customer Service -->
-    <div class="footer-col">
-      <h4>Customer Service</h4>
-      <a href="#">Contact</a>
-      <a href="#">Shipping & Returns</a>
-      <a href="#">FAQs</a>
+    <div class="footer-bottom">
+      <!-- Centered brand at bottom (swap to SVG if you want) -->
+      <div class="footer-brand">W A Y A N I</div>
+      <div class="footer-meta">© W A Y A N I. All rights reserved.</div>
+      <div class="footer-geo">Country/Region: <a href="#">Belgium (English)</a></div>
     </div>
-
-    <!-- The House of WAYANI -->
-    <div class="footer-col">
-      <h4>The House of W A Y A N I</h4>
-      <a href="#">Sustainability</a>
-      <a href="#">Ethics & Compliance</a>
-      <a href="#">Careers</a>
-    </div>
-
-    <!-- Legal -->
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <a href="#">Terms & Conditions</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Cookie Settings</a>
-      <a href="#">General Sales Conditions</a>
-      <a href="#">Sitemap</a>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <!-- Centered brand at bottom (use SVG here if you prefer) -->
-    <div class="footer-brand">W A Y A N I</div>
-    <div class="footer-meta">© W A Y A N I. All rights reserved.</div>
-    <div class="footer-geo">Country/Region: <a href="#">Belgium (English)</a></div>
-  </div>
-</footer>
+  </footer>
 </body>
 </html>
