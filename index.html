@@ -273,6 +273,22 @@
       height: 22px;
     }
   }
+/* Logo sizing + visibility */
+.brand svg{
+  height: 42px;      /* was 28px — make it more visible */
+  width: auto;
+  display: block;
+  margin: 0 auto;
+  shape-rendering: geometricPrecision;
+  text-rendering: optimizeLegibility;
+}
+.brand svg path{
+  fill:#111 !important;  /* ensure solid, dark fill */
+}
+
+@media (max-width: 900px){
+  .brand svg{ height: 28px; }
+}
   </style>
 </head>
 <body>
@@ -313,7 +329,7 @@
       </div>
 
       <div class="brand">
-  <a href="/" aria-label="WAYANI Home" style="display:inline-block; line-height:0;">
+  <span aria-label="WAYANI Home" style="display:inline-block; line-height:0;">
     <!-- WAYANI SVG Logo (transparent background) -->
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
          width="200" height="60" zoomAndPan="magnify" viewBox="0 0 375 374.999991"
@@ -361,7 +377,7 @@
         </g>
       </g>
     </svg>
-  </a>
+  </span>
 </div>
 
       <div class="nav-right">
@@ -771,7 +787,7 @@
     <div class="footer-grid">
       <!-- Newsletter -->
       <div class="newsletter">
-        <h4>W A Y A N I - Whispers</h4>
+        <h4>Join our W A Y A N I whispers</h4>
 		<h4>Timeless Drops, First To You.</h4>
         <form action="https://formspree.io/f/xdkdrzno" method="POST" aria-label="Newsletter signup">
           <input type="email" name="email" placeholder="Email" required>
@@ -798,7 +814,7 @@
 
       <!-- The House of WAYANI -->
       <div class="footer-col">
-        <h4>The House of</h4>
+        <h4>The House of W A Y A N I</h4>
         <a href="#">Sustainability</a>
         <a href="#">Ethics & Compliance</a>
         <a href="#">Careers</a>
