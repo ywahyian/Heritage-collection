@@ -97,13 +97,43 @@
     .dropdown a:hover { background: #f6f2ea; }
     .menu:hover .dropdown, .menu:focus-within .dropdown { display: block; }
 
-    /* Hero */
-    header.hero { text-align: center; padding: 80px 20px 40px; }
-    .kicker { color: var(--muted); font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
-    .title { font-size: 40px; letter-spacing: 0.06em; margin: 0 0 8px; }
-    .subtitle { color: var(--muted); font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 18px; }
-    .tagline { max-width: 860px; margin: 0 auto 10px; font-size: 18px; line-height: 1.6; }
-    .subtle-note { color: var(--muted); font-size: 14px; letter-spacing: 0.08em; margin-top: 8px; }
+   /* Hero (full-bleed image, luxury style) */
+header.hero{
+  position: relative;
+  min-height: min(92vh, 860px);      /* tall, but capped */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  color: #fff;                       /* white text over image */
+  padding: 80px 20px;
+
+  /* 👇 put your image file here — if it's in the same folder, this is enough */
+  background: url('haute-hijab-plaza-0005.webp') center/cover no-repeat;
+}
+
+/* soft dark overlay so text stays readable */
+header.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background: rgba(0,0,0,.35);
+}
+
+/* ensure your existing headings/paragraphs sit above the overlay */
+header.hero > *{ position: relative; z-index: 1; }
+
+/* keep your existing text styles (you can tweak sizes if you like) */
+.kicker   { color: rgba(255,255,255,.85); font-size:14px; letter-spacing:.18em; text-transform:uppercase; margin-bottom:10px; }
+.title    { color:#fff; font-size:44px; letter-spacing:.06em; margin:0 0 8px; }
+.subtitle { color: rgba(255,255,255,.8); font-size:15px; letter-spacing:.14em; text-transform:uppercase; margin:0 0 18px; }
+.tagline  { color:#fff; max-width:860px; margin:0 auto 10px; font-size:18px; line-height:1.65; }
+.subtle-note { color: rgba(255,255,255,.85); font-size:14px; letter-spacing:.08em; margin-top:8px; }
+
+@media (max-width: 700px){
+  .title { font-size:32px; }
+  .tagline { font-size:16px; }
+}
 
     /* Collection Grid */
     .collection { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 40px; padding: 40px 50px 10px; max-width: 1200px; margin: 0 auto; }
