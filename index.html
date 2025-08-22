@@ -43,45 +43,46 @@
     }
     .nav.hide { transform: translateY(-100%); }
 
-/* NAV LAYOUT — desktop (wider, stable center brand) */
-.nav-inner{
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;  /* left | BRAND | right */
-  align-items: center;
-  max-width: 1600px;                    /* wider container */
-  margin: 0 auto;
-  padding: 0 40px;                      /* more side breathing */
-}
-.nav-left, .nav-right { display:flex; gap:32px; }
-.nav-left  { justify-content:flex-start; white-space:nowrap; }
-.nav-right { justify-content:flex-end;   white-space:nowrap; }
+    /* NAV LAYOUT — desktop (wider, stable center brand) */
+    .nav-inner{
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;  /* left | BRAND | right */
+      align-items: center;
+      max-width: 1600px;                    /* wider container */
+      margin: 0 auto;
+      padding: 0 40px;                      /* more side breathing */
+    }
+    .nav-left, .nav-right { display:flex; gap:32px; }
+    .nav-left  { justify-content:flex-start; white-space:nowrap; }
+    .nav-right { justify-content:flex-end;   white-space:nowrap; }
 
-/* Brand centered (remove absolute centering) */
-.brand { 
-  position: static; 
-  transform: none; 
-  text-align: center; 
-  letter-spacing: .22em; 
-  font-size: 22px; 
-}
+    /* Brand centered (remove absolute centering) */
+    .brand { 
+      position: static; 
+      transform: none; 
+      text-align: center; 
+      letter-spacing: .22em; 
+      font-size: 22px; 
+    }
 
-/* Slightly slimmer menu items to avoid wrapping */
-.menu > button { padding: 8px 4px; font-size: 15px; }
-	  /* Wider product grid */
-.collection{
-  max-width: 1800px;        /* was 1200px */
-  margin: 0 auto;
-  padding: 40px 80px 10px;  /* a bit more side padding */
-  gap: 48px;                /* looser cards */
-}
+    /* Slightly slimmer menu items to avoid wrapping */
+    .menu > button { padding: 8px 4px; font-size: 15px; }
 
-/* Wider footer containers */
-.footer-grid,
-.footer-bottom{
-  max-width: 1600px;  /* wider footer like Dior */
-  margin: 0 auto;
-  padding: 0 40px;
-}
+    /* Wider product grid */
+    .collection{
+      max-width: 1800px;        /* was 1200px */
+      margin: 0 auto;
+      padding: 40px 80px 10px;  /* a bit more side padding */
+      gap: 48px;                /* looser cards */
+    }
+
+    /* Wider footer containers */
+    .footer-grid,
+    .footer-bottom{
+      max-width: 1600px;  /* wider footer like Dior */
+      margin: 0 auto;
+      padding: 0 40px;
+    }
 
     /* Brand perfectly centered */
     .brand { text-align: center; letter-spacing: 0.22em; font-size: 22px; }
@@ -242,26 +243,26 @@
     .results .desc { font-size:12px; color:#666; }
     .item.flash { outline:2px solid #C9A23F; outline-offset:2px; transition: outline .2s; }
 
-	  /* === FOOTER WIDTH OVERRIDE (place LAST in <style>) === */
-.site-footer { padding: 72px 0; } /* taller & no side padding on the wrapper */
+    /* === FOOTER WIDTH OVERRIDE (place LAST in <style>) === */
+    .site-footer { padding: 72px 0; } /* taller & no side padding on the wrapper */
 
-.footer-grid,
-.footer-bottom {
-  max-width: none !important;   /* kill any earlier 1200/1600 caps */
-  width: 100%;
-  margin: 0;                    /* no centering box */
-  padding: 0 80px;              /* controlled gutter to the viewport edge */
-}
+    .footer-grid,
+    .footer-bottom {
+      max-width: none !important;   /* kill any earlier 1200/1600 caps */
+      width: 100%;
+      margin: 0;                    /* no centering box */
+      padding: 0 80px;              /* controlled gutter to the viewport edge */
+    }
 
-@media (max-width: 900px) {
-  .footer-grid,
-  .footer-bottom { padding: 0 20px; }
-}
+    @media (max-width: 900px) {
+      .footer-grid,
+      .footer-bottom { padding: 0 20px; }
+    }
 
-/* optional: breathe the columns a bit on wide screens */
-@media (min-width: 1280px) {
-  .footer-grid { column-gap: 48px; }
-}
+    /* optional: breathe the columns a bit on wide screens */
+    @media (min-width: 1280px) {
+      .footer-grid { column-gap: 48px; }
+    }
   </style>
 </head>
 <body>
@@ -301,7 +302,7 @@
         </div>
       </div>
 
-      <div class="brand"><a href="#" aria-label="WAYANI Home">W A Y A̲ N I</a></div>
+      <div class="brand"><a href="#" aria-label="WAYANI Home">W A Y A N I</a></div>
 
       <div class="nav-right">
         <div class="menu">
@@ -327,7 +328,7 @@
       <strong style="letter-spacing:.18em">W A Y A N I</strong>
       <button id="closeMobile" class="icon-btn" aria-label="Close menu">✕</button>
     </header>
-<nav>
+    <nav>
       <div class="mobile-group">
         <button aria-expanded="false">Chapter 1 : Heritage — Season I</button>
         <div class="mobile-sub" hidden>
@@ -562,7 +563,7 @@
       lastY = y;
     });
 
-    /* ===== SEARCH — live previews from first letter (title + snippet + thumbnail) ===== */
+    /* ===== SEARCH — live previews from first letter (ONLY TITLES searched) ===== */
     (function () {
       const searchInput = document.getElementById('searchInput');
       const searchResults = document.getElementById('searchResults');
@@ -583,9 +584,9 @@
         const query = (q || '').trim().toLowerCase();
         if (query.length < 1) return; // match from first letter
 
+        // ✅ Only search in TITLES now (description excluded from matching)
         const hits = productIndex.filter(p =>
-          p.title.toLowerCase().includes(query) ||
-          p.desc.toLowerCase().includes(query)
+          p.title.toLowerCase().includes(query)
         );
 
         if (!hits.length) {
@@ -665,7 +666,7 @@
       <!-- Newsletter -->
       <div class="newsletter">
         <h4>W A Y A N I - Whispers</h4>
-		<h4>Timeless Drops, First To You.</h4>
+        <h4>Timeless Drops, First To You.</h4>
         <form action="https://formspree.io/f/xdkdrzno" method="POST" aria-label="Newsletter signup">
           <input type="email" name="email" placeholder="Email" required>
           <button type="submit">Subscribe</button>
